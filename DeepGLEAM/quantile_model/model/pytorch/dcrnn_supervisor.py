@@ -134,6 +134,7 @@ class DCRNNSupervisor:
                 x, y = self._prepare_data(x, y)
                 
                 output = self.dcrnn_model(x)
+                
                 loss = self._compute_loss(y, output)
                 losses.append(loss.item())
                 
@@ -154,6 +155,9 @@ class DCRNNSupervisor:
                 y_pred = self.standard_scaler_y.inverse_transform(y_preds[t])
                 y_truths_scaled.append(y_truth)
                 y_preds_scaled.append(y_pred)
+            # print(y_preds)
+            # print(y_preds_scaled)
+            # g
 
             return mean_loss, {'prediction': y_preds_scaled, 'truth': y_truths_scaled}
 
