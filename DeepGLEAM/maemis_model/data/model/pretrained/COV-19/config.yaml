@@ -2,7 +2,7 @@ base_dir: data/model
 log_level: INFO
 data:
   batch_size: 1
-  dataset_dir: data/shuffled_data/weeknumber
+  dataset_dir: ../quantile_model/data/shuffled_data/weeknumber
   graph_pkl_filename: data/sensor_graph/adj_mx.pkl
   test_batch_size: 1
 model:
