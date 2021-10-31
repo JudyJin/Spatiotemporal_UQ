@@ -3,7 +3,7 @@ base_dir: data/model
 log_level: INFO
 data:
   batch_size: 29 #18 22 25 29
-  dataset_dir: data/shuffled_data/week34
+  dataset_dir: ../quantile_model/data/shuffled_data/week34
   test_batch_size: 1
   val_batch_size: 28 #18 21 25 28
   graph_pkl_filename: data/sensor_graph/adj_mx.pkl

@@ -292,7 +292,7 @@ class DCRNNSupervisor:
         """
         batch_size = x.size(1)
         x = x.view(self.seq_len, batch_size, self.num_nodes * self.input_dim)
-        y = y[..., :self.output_dim].view(self.horizon, batch_size,
+        y = y[..., :self.output_dim].reshape(self.horizon, batch_size,
                                           self.num_nodes * self.output_dim)
         return x, y
 
