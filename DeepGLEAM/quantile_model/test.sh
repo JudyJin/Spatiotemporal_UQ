@@ -1,6 +1,6 @@
 #!/bin/bash
 
-week="week34"
+week="week55"
 mkdir plot${week}result
 for d in $(find ./$week/* -type d)
 do

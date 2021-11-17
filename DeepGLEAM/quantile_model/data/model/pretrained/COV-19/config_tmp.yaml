@@ -2,7 +2,7 @@ base_dir: data/model
 log_level: INFO
 data:
   batch_size: 1
-  dataset_dir: data/shuffled_data/week34
+  dataset_dir: data/shuffled_data/week55
   graph_pkl_filename: data/sensor_graph/adj_mx.pkl
   test_batch_size: 1
 model:
@@ -21,7 +21,7 @@ model:
 train:
   base_lr: 0.01
   dropout: 0
-  epoch: 237
+  epoch: 167
   epochs: 100
   epsilon: 0.001
   #global_step: 24375

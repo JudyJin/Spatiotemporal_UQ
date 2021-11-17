@@ -84,6 +84,10 @@ class DCRNNSupervisor:
         return log_dir
 
     def save_model(self, epoch):
+        # if 'week55' not in os.getcwd():
+        #     if not os.path.exists('week55'):
+        #         os.makedirs('week55')
+        #     os.chdir('week55')
         if not os.path.exists('models_seed%d' % self.random_seed):
             os.makedirs('models_seed%d' % self.random_seed)
 
@@ -95,6 +99,8 @@ class DCRNNSupervisor:
         return 'models_seed%d/epo%d.tar' % (self.random_seed, epoch)
 
     def load_model(self):
+        # if 'week55' not in os.getcwd():
+        #     os.chdir('week55')
         self._setup_graph()
         assert os.path.exists('models_seed%d/epo%d.tar' % (self.random_seed, self._epoch_num)), 'Weights at epoch %d not found' % self._epoch_num
         checkpoint = torch.load('models_seed%d/epo%d.tar' % (self.random_seed, self._epoch_num), map_location='cpu')
@@ -283,7 +289,7 @@ class DCRNNSupervisor:
         self._logger.debug("X: {}".format(x.size()))
         self._logger.debug("y: {}".format(y.size()))
         x = x.permute(1, 0, 2, 3)
-        y = y.permute(1, 0, 2, 3)
+        y = y.permute(1, 0, 2, 3) #[4,29,50,1]
         return x, y
 
     def _get_x_y_in_correct_dims(self, x, y):
@@ -294,9 +300,22 @@ class DCRNNSupervisor:
                  y: shape (horizon, batch_size, num_sensor * output_dim)
         """
         batch_size = x.size(1)
+        # print(batch_size)
         x = x.view(self.seq_len, batch_size, self.num_nodes * self.input_dim)
-        y = y[..., :self.output_dim].reshape(self.horizon, batch_size,
-                                          self.num_nodes * self.output_dim)
+        # print(y.shape) # torch.Size([4, 29, 50, 1])
+        # print(self.horizon) #1
+        # print(batch_size) #29
+        # print(self.num_nodes * self.output_dim) #200
+        # print(y[..., :self.output_dim].shape) #torch.Size([4, 29, 50, 1]) 
+
+        # should comment out for source ./test.sh
+        y = y.repeat(1,1,1,self.output_dim) #change from torch.Size([4, 29, 50, 1]) to torch.Size([4, 29, 50, 4])
+        y = y.view(self.horizon, batch_size, self.num_nodes * self.output_dim)
+
+        # previous code 
+        # y = y[..., :self.output_dim].view(self.horizon, batch_size,
+        #                                   self.num_nodes * self.output_dim)
+
         return x, y
 
     def _compute_loss(self, y_true, y_predicted):

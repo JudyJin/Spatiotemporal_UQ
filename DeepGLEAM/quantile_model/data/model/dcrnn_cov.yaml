@@ -3,7 +3,7 @@ base_dir: data/model
 log_level: INFO
 data:
   batch_size: 29 #18 22 25 29
-  dataset_dir: data/shuffled_data/week34
+  dataset_dir: data/shuffled_data/week55
   test_batch_size: 1
   val_batch_size: 28 #18 21 25 28
   graph_pkl_filename: data/sensor_graph/adj_mx.pkl
@@ -11,7 +11,7 @@ data:
 model:
   cl_decay_steps: 2000
   filter_type: laplacian
-  horizon: 1
+  horizon: 4 #4
   input_dim: 5
   l1_decay: 0
   max_diffusion_step: 1
