@@ -8,7 +8,9 @@ from yaml.loader import Loader
 
 from lib.utils import load_graph_data
 from model.pytorch.dcrnn_supervisor import DCRNNSupervisor
+import wandb
 
+wandb.init(project="spatiotemporal", entity="judyyy31")
 
 def main(args):
     with open(args.config_filename) as f:

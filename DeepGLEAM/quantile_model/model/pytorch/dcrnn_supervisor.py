@@ -9,6 +9,7 @@ from lib import utils
 from model.pytorch.dcrnn_model import DCRNNModel
 #from model.pytorch.loss import mae_loss
 from model.pytorch.loss import quantile_loss
+import wandb
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -237,6 +238,7 @@ class DCRNNSupervisor:
                                            np.mean(losses), val_loss, lr_scheduler.get_lr()[0],
                                            (end_time - start_time))
                 self._logger.info(message)
+                wandb.log({f'seed{self.random_seed}/train_mae:': np.mean(losses),f'seed{self.random_seed}/val_mae:':val_loss,f'seed{self.random_seed}/lr:':lr_scheduler.get_lr()[0],'epoch_step':epoch_num})
 
             if (epoch_num % test_every_n_epochs) == test_every_n_epochs - 1:
                 test_loss, _ = self.evaluate(dataset='test', batches_seen=batches_seen)
